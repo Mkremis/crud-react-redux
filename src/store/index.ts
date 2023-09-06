@@ -3,6 +3,10 @@ import userReducer from "./users/slice";
 
 export const store=configureStore({
     reducer:{
-        user: userReducer
+        users: userReducer,
     }
 })
+
+export type RootState = ReturnType<typeof store.getState>
+
+export type AppDispatch = typeof store.dispatch
