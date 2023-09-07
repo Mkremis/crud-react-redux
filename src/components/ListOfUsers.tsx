@@ -20,12 +20,12 @@ export function ListOfUsers() {
   const { removeUser } = useUserActions();
   return (
     <Card>
-      <Title>
-        Usuarios
+      <div className="flex">
+        <Title>Usuarios</Title>
         <Badge color="blue" className="ml-1">
           {users.length}
         </Badge>
-      </Title>
+      </div>
       <Table>
         <TableHead>
           <TableRow>

@@ -1,19 +1,44 @@
 import { configureStore, type Middleware } from "@reduxjs/toolkit";
 import userReducer from "./users/slice";
 
-const persistLocalStorage: Middleware = (store) => (next) => (action) => {
-  console.log(action);
-  next(action);
-  localStorage.setItem("__redux_state__", JSON.stringify(store.getState()));
-};
+const persistLocalStorageMiddleware: Middleware =
+  (store) => (next) => (action) => {
+    console.log(action);
+    next(action);
+    localStorage.setItem("__redux_state__", JSON.stringify(store.getState()));
+  };
 
-const syncWithDataBase: Middleware = (store) => (next) => (action) => {};
+const syncWithDataBaseMiddleware: Middleware =
+  (store) => (next) => (action) => {
+    // fase 1
+    const { type, payload } = action;
+    console.log(
+      "fase 1:",
+      "type",
+      type,
+      "payload",
+      payload,
+      "state",
+      store.getState()
+    );
+    next(action);
+    // fase 2
+    console.log(
+      "fase 2:",
+      "type",
+      type,
+      "payload",
+      payload,
+      "state",
+      store.getState()
+    );
+  };
 
 export const store = configureStore({
   reducer: {
     users: userReducer,
   },
-  middleware: [persistLocalStorage],
+  middleware: [persistLocalStorageMiddleware, syncWithDataBaseMiddleware],
 });
 
 export type RootState = ReturnType<typeof store.getState>;
